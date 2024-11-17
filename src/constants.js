@@ -4,7 +4,7 @@ export const STATUSES = {
     FINISHED: "FINISHED"
 };
 
-export const BACKEND_DOMAIN = "http://localhost:8080";
+export const BACKEND_DOMAIN = "http://localhost:7000";
 
 export const ENDPOINTS = new Map([
     ["getAll", "/todo"],

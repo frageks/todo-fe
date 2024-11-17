@@ -11,7 +11,6 @@ function TodoList({ todos, handleSort, handleMove, listType, group, sendSort, op
         tag="ul"
         group={group}
         onChange={(evt, sortable) => {
-          // console.log(evt, sortable);
           // const newOrder = order.map((index) => todos[index]);
           // handleSort(newOrder);
         }}

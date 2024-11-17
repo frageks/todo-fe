@@ -3,9 +3,10 @@ import Modal from "react-modal";
 import RequestsHandler from "./requestsHandler";
 
 function DeleteModal({ modalIsOpen, closeModal, todo, setTodo }) {
-    function yes(e) {
+    async function yes(e) {
         e.preventDefault();
-        RequestsHandler.delete(todo.id);
+        await RequestsHandler.delete(todo.id);
+        setTodo(todo.id);
         closeModal();
     }
 

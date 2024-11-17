@@ -7,7 +7,7 @@ const RequestsHandler = {
     },
 
     add: async (listId, item) => {
-        return axios.post(BACKEND_DOMAIN + ENDPOINTS.get("add") + "/" + listId, { item });
+        return axios.post(BACKEND_DOMAIN + ENDPOINTS.get("add"), { item });
     },
 
     update: async (item) => {

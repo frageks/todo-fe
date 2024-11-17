@@ -20,10 +20,8 @@ function App() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      // Приклад запиту через fetch. Можеш замінити на свій API.
       const data = await RequestsHandler.getAll();
 
-      // Розподіляємо завдання по списках
       const todosList = data.filter(todo => !todo.completed);
       const completedList = data.filter(todo => todo.completed);
 
@@ -93,7 +91,6 @@ function App() {
 
   const sendSort = async (listType, oldIndex, newIndex) => {
     const item = getListByListType(listType)[oldIndex];
-    console.log(item);
     RequestsHandler.setPriority(listType, item.id, newIndex);
   };
 
@@ -125,6 +122,19 @@ function App() {
     }
   }
 
+  const handleDelete = (id) => {
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+    setCurrentTodos((todos) => todos.filter((todo) => todo.id !== id));
+    setCompletedTodos((todos) => todos.filter((todo) => todo.id !== id));
+  };
+
+  const handleEdit = () => {
+    const { id } = currentTodo;
+    setTodos(todos.map(todo => todo.id === id ? currentTodo : todo));
+    setCurrentTodos(todos.map(todo => todo.id === id ? currentTodo : todo));
+    setCompletedTodos(todos.map(todo => todo.id === id ? currentTodo : todo));
+  };
+
   // if (loading) return <p>Завантаження...</p>;
   if (error) return <p>Помилка: {error}</p>;
 
@@ -135,13 +145,14 @@ function App() {
         closeModal={closeModal}
         todo={currentTodo}
         setTodo={setCurrentTodo}
+        save={handleEdit}
       />
 
       <DeleteModal
         modalIsOpen={deleteModalIsOpen}
         closeModal={closeDeleteModal}
         todo={currentTodo}
-        setTodo={setCurrentTodo}
+        setTodo={handleDelete}
       />
 
       <h1>Туду-ліст</h1>

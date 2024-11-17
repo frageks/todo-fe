@@ -4,19 +4,20 @@ import RequestsHandler from "./requestsHandler";
 
 Modal.setAppElement("#root");
 
-function EditForm({ modalIsOpen, closeModal, todo, setTodo }) {
+function EditForm({ modalIsOpen, closeModal, todo, setTodo, save: saveTodo }) {
     function updateTodo(title, description) {
         if (title !== undefined) {
-            setTodo({ title, ...todo });
+            setTodo({ ...todo, title });
         }
         if (description !== undefined) {
-            setTodo({ description, ...todo });
+            setTodo({ ...todo, description });
         }
     }
 
-    function save(e) {
+    async function save(e) {
         e.preventDefault();
-        RequestsHandler.update(todo);
+        await RequestsHandler.update(todo);
+        saveTodo(todo);
         closeModal();
     }
 
@@ -44,8 +45,8 @@ function EditForm({ modalIsOpen, closeModal, todo, setTodo }) {
             </div>
             <div className="form-wrapper">
                 <form>
-                    <input defaultValue={todo.title} onChange={() => updateTodo(todo.title)} />
-                    <input defaultValue={todo.description} onChange={() => updateTodo(undefined, todo.description)} />
+                    <input defaultValue={todo.title} onChange={(e) => updateTodo(e.target.value)} />
+                    <input defaultValue={todo.description} onChange={(e) => updateTodo(undefined, e.target.value)} />
                     <button type="submit" onClick={save}>Save</button>
                 </form>
             </div>
