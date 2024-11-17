@@ -5,7 +5,7 @@ import TodoList from "./TodoList";
 import TodoForm from "./TodoForm";
 import RequestsHandler from "./requestsHandler";
 import { STATUSES } from "./constants";
-import { testTodos, testCurrentTodos, testCompletedTodos } from "./mocks";
+// import { testTodos, testCurrentTodos, testCompletedTodos } from "./mocks";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -20,22 +20,18 @@ function App() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const data = await RequestsHandler.getAll();
+      const { data } = await RequestsHandler.getAll();
 
-      const todosList = data.filter(todo => !todo.completed);
-      const completedList = data.filter(todo => todo.completed);
+      const todosList = data.filter(todo => todo.status === 'NEW');
+      const currentTodos = data.filter(todo => todo.status === 'IN-PROGRESS');
+      const completedList = data.filter(todo => todo.status === 'COMPLETED');
 
       setTodos(todosList);
+      setCompletedTodos(currentTodos);
       setCompletedTodos(completedList);
       setLoading(false);
     } catch (err) {
-      // console.error("Error fetching data:", err);
-      // setError(err.message);
-      // setLoading(false);
       setTimeout(() => {
-        setTodos(testTodos);
-        setCurrentTodos(testCurrentTodos);
-        setCompletedTodos(testCompletedTodos);
         setLoading(false);
       }, 200);
     }
