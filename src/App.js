@@ -62,17 +62,17 @@ function App() {
       const item = todos[fromIndex];
       setTodos(todos.filter((todo) => todo !== item));
       setCurrentTodos([...currentTodos, item]);
-      RequestsHandler.setList(to, item.id, toIndex);
+      RequestsHandler.setList(to, item._id, toIndex);
     } else if (from === "completedTodos" && to === "todos") {
       const item = completedTodos[fromIndex];
       setCompletedTodos(completedTodos.filter((todo) => todo !== item));
       setTodos([...todos, item]);
-      RequestsHandler.setList(to, item.id, toIndex);
+      RequestsHandler.setList(to, item._id, toIndex);
     } else if (from === "currentTodos" && to === "completedTodos") {
       const item = currentTodos[fromIndex];
       setCurrentTodos(currentTodos.filter((todo) => todo !== item));
       setCompletedTodos([...completedTodos, item]);
-      RequestsHandler.setList(to, item.id, toIndex);
+      RequestsHandler.setList(to, item._id, toIndex);
     }
   };
 
@@ -87,7 +87,7 @@ function App() {
 
   const sendSort = async (listType, oldIndex, newIndex) => {
     const item = getListByListType(listType)[oldIndex];
-    RequestsHandler.setPriority(listType, item.id, newIndex);
+    RequestsHandler.setPriority(listType, item._id, newIndex);
   };
 
   function openModal(todo) {
@@ -119,16 +119,16 @@ function App() {
   }
 
   const handleDelete = (id) => {
-    setTodos((todos) => todos.filter((todo) => todo.id !== id));
-    setCurrentTodos((todos) => todos.filter((todo) => todo.id !== id));
-    setCompletedTodos((todos) => todos.filter((todo) => todo.id !== id));
+    setTodos((todos) => todos.filter((todo) => todo._id !== id));
+    setCurrentTodos((todos) => todos.filter((todo) => todo._id !== id));
+    setCompletedTodos((todos) => todos.filter((todo) => todo._id !== id));
   };
 
   const handleEdit = () => {
-    const { id } = currentTodo;
-    setTodos(todos.map(todo => todo.id === id ? currentTodo : todo));
-    setCurrentTodos(todos.map(todo => todo.id === id ? currentTodo : todo));
-    setCompletedTodos(todos.map(todo => todo.id === id ? currentTodo : todo));
+    const { _id } = currentTodo;
+    setTodos(todos.map(todo => todo._id === _id ? currentTodo : todo));
+    setCurrentTodos(currentTodos.map(todo => todo._id === _id ? currentTodo : todo));
+    setCompletedTodos(completedTodos.map(todo => todo._id === _id ? currentTodo : todo));
   };
 
   // if (loading) return <p>Завантаження...</p>;

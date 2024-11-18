@@ -5,8 +5,8 @@ import RequestsHandler from "./requestsHandler";
 function DeleteModal({ modalIsOpen, closeModal, todo, setTodo }) {
     async function yes(e) {
         e.preventDefault();
-        await RequestsHandler.delete(todo.id);
-        setTodo(todo.id);
+        await RequestsHandler.delete(todo._id);
+        setTodo(todo._id);
         closeModal();
     }
 
